@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import Stack from "./Stack";
 
 const HeaderContainer = styled(Box)`
-  max-width: 600px;
   margin: 0 auto;
 `;
 
