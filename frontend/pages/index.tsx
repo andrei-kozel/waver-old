@@ -4,7 +4,7 @@ import { injected, walletconnect } from "../connectors/connectors";
 import { Chip, Container, Fab, Stack, Typography } from "@mui/material";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { useEffect, useState } from "react";
-import WalletModal from "../connectors/WalletModal";
+import WalletModal from "../components/WalletModal";
 import { ethers } from "ethers";
 
 const Home: NextPage = () => {
@@ -22,6 +22,10 @@ const Home: NextPage = () => {
       .catch((e) => {
         console.log(e);
       });
+
+    if (localStorage.getItem("walletconnect")) {
+      activate(walletconnect);
+    }
   }, [active, error, activate]);
 
   const handleOpen = () => setOpen(true);
@@ -53,6 +57,16 @@ const Home: NextPage = () => {
     setOpen(false);
   };
 
+  const disconnect = async () => {
+    // localStorage.removeItem("walletconnect");
+    // connector?.getProvider().then((res) => console.log(res));
+    try {
+      console.log(connector);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container maxWidth="md">
       <Fab
@@ -82,6 +96,8 @@ const Home: NextPage = () => {
         <Chip color="primary" label="hardhat" onClick={() => {}} />
         <Chip color="primary" label="styled-components" onClick={() => {}} />
       </Stack>
+
+      <button onClick={() => void connector?.deactivate()}>Disconnect</button>
 
       <WalletModal
         open={open}
